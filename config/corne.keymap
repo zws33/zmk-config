@@ -4,9 +4,9 @@
  * macOS-optimized layout with GACS home row mods.
  * Designed for Neovim, Android Studio (IntelliJ), and CLI workflows.
  *
- * GACS order (pinky to index):
- *   Left:  A=Gui  S=Alt  D=Ctrl  F=Shift
- *   Right: J=Shift  K=Ctrl  L=Alt  ;=Gui
+ * GACS home row mods (left hand only, pinky to index):
+ *   A=Gui  S=Alt  D=Ctrl  F=Shift
+ * Right hand is plain keys for Vim hold-to-repeat (j/k).
  *
  * Layers:
  *   0 BASE   - QWERTY + home row mods
@@ -55,12 +55,12 @@
         base_layer {
 // -----------------------------------------------------------------------------------------
 // | TAB  |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BSPC |
-// | LCTL | A/G | S/A | D/C | F/S |  G  |   |  H  | J/S  | K/C | L/A | ;/G |  '   |
+// | LCTL | A/G | S/A | D/C | F/S |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
 // | LSFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  | RSFT |
 //                     | ESC | LWR/TAB | BSPC |   | ENT | RSE/SPC | RGUI |
             bindings = <
     &kp TAB   &kp Q      &kp W      &kp E       &kp R       &kp T       &kp Y  &kp U       &kp I       &kp O      &kp P         &kp BSPC
-    &kp LCTRL &hm LGUI A &hm LALT S &hm LCTRL D &hm LSHFT F &kp G       &kp H  &hm RSHFT J &hm RCTRL K &hm RALT L &hm RGUI SEMI &kp SQT
+    &kp LCTRL &hm LGUI A &hm LALT S &hm LCTRL D &hm LSHFT F &kp G       &kp H  &kp J       &kp K       &kp L      &kp SEMI      &kp SQT
     &kp LSHFT &kp Z      &kp X      &kp C       &kp V       &kp B       &kp N  &kp M       &kp COMMA   &kp DOT    &kp FSLH      &kp RSHFT
                                      &kp ESC     &lt LOWER TAB &kp BSPC   &kp RET &lt RAISE SPACE &kp RGUI
             >;
