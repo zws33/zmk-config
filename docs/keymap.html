@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corne 42 — Keymap Reference</title>
+<style>
+  :root {
+    --bg: #1a1b26;
+    --surface: #24283b;
+    --border: #3b4261;
+    --text: #c0caf5;
+    --text-dim: #565f89;
+    --accent: #7aa2f7;
+    --mod: #bb9af7;
+    --layer: #e0af68;
+    --nav: #73daca;
+    --sym: #f7768e;
+    --media: #9ece6a;
+    --bt: #2ac3de;
+    --held: #ff9e64;
+    --trans-bg: #1e2030;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', 'Cascadia Code', monospace;
+    font-size: 13px;
+    padding: 24px;
+    min-height: 100vh;
+  }
+
+  h1 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .subtitle {
+    color: var(--text-dim);
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+
+  .tab {
+    padding: 8px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px 6px 0 0;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+  }
+
+  .tab:hover { color: var(--text); background: #2a2e42; }
+  .tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    background: var(--surface);
+  }
+
+  .layer { display: none; }
+  .layer.active { display: block; }
+
+  .layer-title {
+    font-size: 14px;
+    color: var(--layer);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+
+  .layer-desc {
+    color: var(--text-dim);
+    font-size: 11px;
+    margin-bottom: 14px;
+  }
+
+  .keyboard {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    align-items: start;
+  }
+
+  .half { display: flex; flex-direction: column; gap: 4px; }
+
+  .row {
+    display: flex;
+    gap: 4px;
+  }
+
+  .thumb-row {
+    display: flex;
+    gap: 4px;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+
+  .right .thumb-row { justify-content: flex-start; }
+
+  .key {
+    width: 64px;
+    height: 48px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    position: relative;
+    transition: transform 0.1s;
+  }
+
+  .key:hover { transform: translateY(-1px); }
+
+  .key .tap { font-size: 12px; font-weight: 600; }
+  .key .hold {
+    font-size: 9px;
+    color: var(--mod);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  .key.mod { border-color: var(--mod); background: #2d2250; }
+  .key.layer-key { border-color: var(--layer); background: #2d2a1f; }
+  .key.nav { border-color: var(--nav); background: #1a2d2a; }
+  .key.sym { border-color: var(--sym); background: #2d1a22; }
+  .key.media { border-color: var(--media); background: #1f2d1a; }
+  .key.bt { border-color: var(--bt); background: #1a2a2d; }
+  .key.blank {
+    border-style: dashed;
+    border-color: #2a2e3f;
+    background: var(--bg);
+    color: var(--text-dim);
+  }
+  .key.trans {
+    background: var(--trans-bg);
+    border-style: dotted;
+    border-color: #3b4261;
+    color: var(--text-dim);
+  }
+  .key.held {
+    border-color: var(--held);
+    background: #2d2519;
+    color: var(--held);
+  }
+
+  .legend {
+    display: flex;
+    gap: 16px;
+    margin-top: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .legend-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    border: 1px solid;
+  }
+
+  .swatch-mod { border-color: var(--mod); background: #2d2250; }
+  .swatch-layer { border-color: var(--layer); background: #2d2a1f; }
+  .swatch-nav { border-color: var(--nav); background: #1a2d2a; }
+  .swatch-sym { border-color: var(--sym); background: #2d1a22; }
+  .swatch-media { border-color: var(--media); background: #1f2d1a; }
+  .swatch-bt { border-color: var(--bt); background: #1a2a2d; }
+  .swatch-trans { border-color: #3b4261; background: var(--trans-bg); border-style: dotted; }
+
+  .hrm-note {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 11px;
+    margin-top: 12px;
+  }
+
+  .hrm-note span { color: var(--mod); }
+
+  kbd {
+    display: inline-block;
+    padding: 1px 5px;
+    font-family: inherit;
+    font-size: 11px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text);
+  }
+</style>
+</head>
+<body>
+
+<h1>Corne 42 — ZMK Keymap</h1>
+<div class="subtitle">macOS &middot; Neovim &middot; IntelliJ &nbsp;|&nbsp; GACS home row mods (left hand)</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="show(0)">Base</button>
+  <button class="tab" onclick="show(1)">Lower</button>
+  <button class="tab" onclick="show(2)">Raise</button>
+  <button class="tab" onclick="show(3)">Adjust</button>
+</div>
+
+<!-- BASE -->
+<div class="layer active" id="layer-0">
+  <div class="layer-title">Base Layer</div>
+  <div class="layer-desc">QWERTY + GACS home row mods (left hand only)</div>
+  <div class="keyboard">
+    <div class="half left">
+      <div class="row">
+        <div class="key"><span class="tap">Tab</span></div>
+        <div class="key"><span class="tap">Q</span></div>
+        <div class="key"><span class="tap">W</span></div>
+        <div class="key"><span class="tap">E</span></div>
+        <div class="key"><span class="tap">R</span></div>
+        <div class="key"><span class="tap">T</span></div>
+      </div>
+      <div class="row">
+        <div class="key mod"><span class="tap">LCtl</span></div>
+        <div class="key mod"><span class="tap">A</span><span class="hold">Gui</span></div>
+        <div class="key mod"><span class="tap">S</span><span class="hold">Alt</span></div>
+        <div class="key mod"><span class="tap">D</span><span class="hold">Ctrl</span></div>
+        <div class="key mod"><span class="tap">F</span><span class="hold">Shift</span></div>
+        <div class="key"><span class="tap">G</span></div>
+      </div>
+      <div class="row">
+        <div class="key mod"><span class="tap">LSft</span></div>
+        <div class="key"><span class="tap">Z</span></div>
+        <div class="key"><span class="tap">X</span></div>
+        <div class="key"><span class="tap">C</span></div>
+        <div class="key"><span class="tap">V</span></div>
+        <div class="key"><span class="tap">B</span></div>
+      </div>
+      <div class="thumb-row">
+        <div class="key mod"><span class="tap">Esc</span><span class="hold">Gui</span></div>
+        <div class="key layer-key"><span class="tap">Tab</span><span class="hold">Lower</span></div>
+        <div class="key"><span class="tap">Bspc</span></div>
+      </div>
+    </div>
+    <div class="half right">
+      <div class="row">
+        <div class="key"><span class="tap">Y</span></div>
+        <div class="key"><span class="tap">U</span></div>
+        <div class="key"><span class="tap">I</span></div>
+        <div class="key"><span class="tap">O</span></div>
+        <div class="key"><span class="tap">P</span></div>
+        <div class="key"><span class="tap">Bspc</span></div>
+      </div>
+      <div class="row">
+        <div class="key"><span class="tap">H</span></div>
+        <div class="key"><span class="tap">J</span></div>
+        <div class="key"><span class="tap">K</span></div>
+        <div class="key"><span class="tap">L</span></div>
+        <div class="key"><span class="tap">;</span></div>
+        <div class="key"><span class="tap">'</span></div>
+      </div>
+      <div class="row">
+        <div class="key"><span class="tap">N</span></div>
+        <div class="key"><span class="tap">M</span></div>
+        <div class="key"><span class="tap">,</span></div>
+        <div class="key"><span class="tap">.</span></div>
+        <div class="key"><span class="tap">/</span></div>
+        <div class="key mod"><span class="tap">RSft</span></div>
+      </div>
+      <div class="thumb-row">
+        <div class="key"><span class="tap">Ent</span></div>
+        <div class="key layer-key"><span class="tap">Spc</span><span class="hold">Raise</span></div>
+        <div class="key mod"><span class="tap">RGui</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="hrm-note">Home row mods: <span>A=Gui &nbsp; S=Alt &nbsp; D=Ctrl &nbsp; F=Shift</span> &nbsp;(280ms balanced)</div>
+</div>
+
+<!-- LOWER -->
+<div class="layer" id="layer-1">
+  <div class="layer-title">Lower Layer</div>
+  <div class="layer-desc">Numbers (top row) + Vim-style navigation (HJKL) &nbsp;|&nbsp; Activate: hold left thumb <kbd>Tab</kbd></div>
+  <div class="keyboard">
+    <div class="half left">
+      <div class="row">
+        <div class="key"><span class="tap">`</span></div>
+        <div class="key"><span class="tap">1</span></div>
+        <div class="key"><span class="tap">2</span></div>
+        <div class="key"><span class="tap">3</span></div>
+        <div class="key"><span class="tap">4</span></div>
+        <div class="key"><span class="tap">5</span></div>
+      </div>
+      <div class="row">
+        <div class="key trans"><span class="tap">LCtl</span></div>
+        <div class="key trans"><span class="tap">A/Gui</span></div>
+        <div class="key mod"><span class="tap">Alt</span></div>
+        <div class="key mod"><span class="tap">Ctrl</span></div>
+        <div class="key mod"><span class="tap">Shift</span></div>
+        <div class="key blank"></div>
+      </div>
+      <div class="row">
+        <div class="key trans"><span class="tap">LSft</span></div>
+        <div class="key blank"></div>
+        <div class="key blank"></div>
+        <div class="key blank"></div>
+        <div class="key blank"></div>
+        <div class="key blank"></div>
+      </div>
+      <div class="thumb-row">
+        <div class="key trans"><span class="tap">Esc/Gui</span></div>
+        <div class="key held"><span class="tap">Lower</span><span class="hold">held</span></div>
+        <div class="key trans"><span class="tap">Bspc</span></div>
+      </div>
+    </div>
+    <div class="half right">
+      <div class="row">
+        <div class="key"><span class="tap">6</span></div>
+        <div class="key"><span class="tap">7</span></div>
+        <div class="key"><span class="tap">8</span></div>
+        <div class="key"><span class="tap">9</span></div>
+        <div class="key"><span class="tap">0</span></div>
+        <div class="key"><span class="tap">Del</span></div>
+      </div>
+      <div class="row">
+        <div class="key nav"><span class="tap">&larr;</span></div>
+        <div class="key nav"><span class="tap">&darr;</span></div>
+        <div class="key nav"><span class="tap">&uarr;</span></div>
+        <div class="key nav"><span class="tap">&rarr;</span></div>
+        <div class="key blank"></div>
+        <div class="key blank"></div>
+      </div>
+      <div class="row">
+        <div class="key nav"><span class="tap">Home</span></div>
+        <div class="key nav"><span class="tap">PgDn</span></div>
+        <div class="key nav"><span class="tap">PgUp</span></div>
+        <div class="key nav"><span class="tap">End</span></div>
+        <div class="key blank"></div>
+        <div class="key blank"></div>
+      </div>
+      <div class="thumb-row">
+        <div class="key trans"><span class="tap">Ent</span></div>
+        <div class="key trans"><span class="tap">Spc/Rse</span></div>
+        <div class="key trans"><span class="tap">RGui</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RAISE -->
+<div class="layer" id="layer-2">
+  <div class="layer-title">Raise Layer</div>
+  <div class="layer-desc">Symbols + brackets &nbsp;|&nbsp; Activate: hold right thumb <kbd>Spc</kbd></div>
+  <div class="keyboard">
+    <div class="half left">
+      <div class="row">
+        <div class="key sym"><span class="tap">~</span></div>
+        <div class="key sym"><span class="tap">!</span></div>
+        <div class="key sym"><span class="tap">@</span></div>
+        <div class="key sym"><span class="tap">#</span></div>
+        <div class="key sym"><span class="tap">$</span></div>
+        <div class="key sym"><span class="tap">%</span></div>
+      </div>
+      <div class="row">
+        <div class="key trans"><span class="tap">LCtl</span></div>
+        <div class="key trans"><span class="tap">A/Gui</span></div>
+        <div class="key mod"><span class="tap">Alt</span></div>
+        <div class="key mod"><span class="tap">Ctrl</span></div>
+        <div class="key mod"><span class="tap">Shift</span></div>
+        <div class="key blank"></div>
+      </div>
+      <div class="row">
+        <div class="key trans"><span class="tap">LSft</span></div>
+        <div class="key blank"></div>
+        <div class="key blank"></div>
+        <div class="key blank"></div>
+        <div class="key blank"></div>
+        <div class="key blank"></div>
+      </div>
+      <div class="thumb-row">
+        <div class="key trans"><span class="tap">Esc/Gui</span></div>
+        <div class="key trans"><span class="tap">Tab/Lwr</span></div>
+        <div class="key trans"><span class="tap">Bspc</span></div>
+      </div>
+    </div>
+    <div class="half right">
+      <div class="row">
+        <div class="key sym"><span class="tap">^</span></div>
+        <div class="key sym"><span class="tap">&amp;</span></div>
+        <div class="key sym"><span class="tap">*</span></div>
+        <div class="key sym"><span class="tap">(</span></div>
+        <div class="key sym"><span class="tap">)</span></div>
+        <div class="key"><span class="tap">Bspc</span></div>
+      </div>
+      <div class="row">
+        <div class="key sym"><span class="tap">-</span></div>
+        <div class="key sym"><span class="tap">=</span></div>
+        <div class="key sym"><span class="tap">[</span></div>
+        <div class="key sym"><span class="tap">]</span></div>
+        <div class="key sym"><span class="tap">\</span></div>
+        <div class="key sym"><span class="tap">`</span></div>
+      </div>
+      <div class="row">
+        <div class="key sym"><span class="tap">_</span></div>
+        <div class="key sym"><span class="tap">+</span></div>
+        <div class="key sym"><span class="tap">{</span></div>
+        <div class="key sym"><span class="tap">}</span></div>
+        <div class="key sym"><span class="tap">|</span></div>
+        <div class="key sym"><span class="tap">~</span></div>
+      </div>
+      <div class="thumb-row">
+        <div class="key trans"><span class="tap">Ent</span></div>
+        <div class="key held"><span class="tap">Raise</span><span class="hold">held</span></div>
+        <div class="key trans"><span class="tap">RGui</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADJUST -->
+<div class="layer" id="layer-3">
+  <div class="layer-title">Adjust Layer</div>
+  <div class="layer-desc">F-keys, Bluetooth, media &nbsp;|&nbsp; Activate: hold <kbd>Lower</kbd> + <kbd>Raise</kbd> (tri-layer)</div>
+  <div class="keyboard">
+    <div class="half left">
+      <div class="row">
+        <div class="key"><span class="tap">F1</span></div>
+        <div class="key"><span class="tap">F2</span></div>
+        <div class="key"><span class="tap">F3</span></div>
+        <div class="key"><span class="tap">F4</span></div>
+        <div class="key"><span class="tap">F5</span></div>
+        <div class="key"><span class="tap">F6</span></div>
+      </div>
+      <div class="row">
+        <div class="key bt"><span class="tap">BT 0</span></div>
+        <div class="key bt"><span class="tap">BT 1</span></div>
+        <div class="key bt"><span class="tap">BT 2</span></div>
+        <div class="key bt"><span class="tap">BT 3</span></div>
+        <div class="key bt"><span class="tap">BT 4</span></div>
+        <div class="key bt"><span class="tap">BT Clr</span></div>
+      </div>
+      <div class="row">
+        <div class="key blank"></div>
+        <div class="key blank"></div>
+        <div class="key blank"></div>
+        <div class="key blank"></div>
+        <div class="key blank"></div>
+        <div class="key blank"></div>
+      </div>
+      <div class="thumb-row">
+        <div class="key trans"><span class="tap">Esc/Gui</span></div>
+        <div class="key held"><span class="tap">Lower</span><span class="hold">held</span></div>
+        <div class="key trans"><span class="tap">Bspc</span></div>
+      </div>
+    </div>
+    <div class="half right">
+      <div class="row">
+        <div class="key"><span class="tap">F7</span></div>
+        <div class="key"><span class="tap">F8</span></div>
+        <div class="key"><span class="tap">F9</span></div>
+        <div class="key"><span class="tap">F10</span></div>
+        <div class="key"><span class="tap">F11</span></div>
+        <div class="key"><span class="tap">F12</span></div>
+      </div>
+      <div class="row">
+        <div class="key blank"></div>
+        <div class="key media"><span class="tap">Vol-</span></div>
+        <div class="key media"><span class="tap">Vol+</span></div>
+        <div class="key media"><span class="tap">Mute</span></div>
+        <div class="key blank"></div>
+        <div class="key blank"></div>
+      </div>
+      <div class="row">
+        <div class="key blank"></div>
+        <div class="key media"><span class="tap">Prev</span></div>
+        <div class="key media"><span class="tap">Play</span></div>
+        <div class="key media"><span class="tap">Next</span></div>
+        <div class="key blank"></div>
+        <div class="key blank"></div>
+      </div>
+      <div class="thumb-row">
+        <div class="key trans"><span class="tap">Ent</span></div>
+        <div class="key held"><span class="tap">Raise</span><span class="hold">held</span></div>
+        <div class="key trans"><span class="tap">RGui</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-swatch swatch-mod"></div> Modifier</div>
+  <div class="legend-item"><div class="legend-swatch swatch-layer"></div> Layer</div>
+  <div class="legend-item"><div class="legend-swatch swatch-nav"></div> Navigation</div>
+  <div class="legend-item"><div class="legend-swatch swatch-sym"></div> Symbol</div>
+  <div class="legend-item"><div class="legend-swatch swatch-media"></div> Media</div>
+  <div class="legend-item"><div class="legend-swatch swatch-bt"></div> Bluetooth</div>
+  <div class="legend-item"><div class="legend-swatch swatch-trans"></div> Transparent</div>
+</div>
+
+<script>
+function show(n) {
+  document.querySelectorAll('.layer').forEach(l => l.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('layer-' + n).classList.add('active');
+  document.querySelectorAll('.tab')[n].classList.add('active');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key >= '1' && e.key <= '4') show(parseInt(e.key) - 1);
+});
+</script>
+
+</body>
+</html>
