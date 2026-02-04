@@ -54,12 +54,12 @@
 
         base_layer {
 // -----------------------------------------------------------------------------------------
-// | TAB  |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BSPC |
+// | TAB  |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  |  `   |
 // | LCTL | A/G | S/A | D/C | F/S |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
 // | LSFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  | RSFT |
 //                     | GUI/ESC | LWR/TAB | BSPC |   | ENT | RSE/SPC | RGUI |
             bindings = <
-    &kp TAB   &kp Q      &kp W      &kp E       &kp R       &kp T       &kp Y  &kp U       &kp I       &kp O      &kp P         &kp BSPC
+    &kp TAB   &kp Q      &kp W      &kp E       &kp R       &kp T       &kp Y  &kp U       &kp I       &kp O      &kp P         &kp GRAVE
     &kp LCTRL &hm LGUI A &hm LALT S &hm LCTRL D &hm LSHFT F &kp G       &kp H  &kp J       &kp K       &kp L      &kp SEMI      &kp SQT
     &kp LSHFT &kp Z      &kp X      &kp C       &kp V       &kp B       &kp N  &kp M       &kp COMMA   &kp DOT    &kp FSLH      &kp RSHFT
                                      &hm LGUI ESC &lt LOWER TAB &kp BSPC   &kp RET &lt RAISE SPACE &kp RGUI
@@ -82,12 +82,12 @@
 
         raise_layer {
 // -----------------------------------------------------------------------------------------
-// |  ~   |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  | BSPC |
+// |  ~   |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  |  ~   |
 // |      |     | ALT | CTL | SFT |     |   |  -  |  =  |  [  |  ]  |  \  |  `   |
 // |      |     |     |     |     |     |   |  _  |  +  |  {  |  }  | "|" |  ~   |
 //                     |     |     |     |   |     |     |     |
             bindings = <
-    &kp TILDE &kp EXCL &kp AT   &kp HASH  &kp DLLR  &kp PRCNT   &kp CARET &kp AMPS  &kp ASTRK &kp LPAR &kp RPAR &kp BSPC
+    &kp TILDE &kp EXCL &kp AT   &kp HASH  &kp DLLR  &kp PRCNT   &kp CARET &kp AMPS  &kp ASTRK &kp LPAR &kp RPAR &kp TILDE
     &trans    &trans   &kp LALT &kp LCTRL &kp LSHFT &none       &kp MINUS &kp EQUAL &kp LBKT  &kp RBKT &kp BSLH &kp GRAVE
     &trans    &none    &none    &none     &none     &none       &kp UNDER &kp PLUS  &kp LBRC  &kp RBRC &kp PIPE &kp TILDE
                                 &trans    &trans    &trans      &trans    &trans    &trans
