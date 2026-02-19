@@ -22,19 +22,19 @@ include:
   # RGB Underglow Build
   - board: nice_nano_v2
     shield: corne_left
-    cmake-args: -DEXTRA_CONF_FILE=config/rgb.conf
+    cmake-args: -DCONF_FILE="corne.conf;rgb.conf"
     artifact-name: corne_left_rgb
   - board: nice_nano_v2
     shield: corne_right
-    cmake-args: -DEXTRA_CONF_FILE=config/rgb.conf
+    cmake-args: -DCONF_FILE="corne.conf;rgb.conf"
     artifact-name: corne_right_rgb
 
   # nice!view Build
   - board: nice_nano_v2
     shield: corne_left nice_view_adapter nice_view
-    cmake-args: -DEXTRA_CONF_FILE=config/nice_view.conf
+    cmake-args: -DCONF_FILE="corne.conf;nice_view.conf"
     artifact-name: corne_left_niceview
   - board: nice_nano_v2
     shield: corne_right nice_view_adapter nice_view
-    cmake-args: -DEXTRA_CONF_FILE=config/nice_view.conf
+    cmake-args: -DCONF_FILE="corne.conf;nice_view.conf"
     artifact-name: corne_right_niceview
