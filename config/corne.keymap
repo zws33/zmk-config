@@ -54,28 +54,28 @@
 
         base_layer {
 // -----------------------------------------------------------------------------------------
-// | TAB  |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  |  `   |
+// | ESC  |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  |  `   |
 // | LCTL | A/G | S/A | D/C | F/S |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
 // | LSFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  | RSFT |
-//                     | GUI/ESC | LWR/TAB | BSPC |   | ENT | RSE/SPC | RGUI |
+//                     |  GUI    | LWR/TAB | BSPC |   | ENT | RSE/SPC | RGUI |
             bindings = <
-    &kp TAB   &kp Q      &kp W      &kp E       &kp R       &kp T       &kp Y  &kp U       &kp I       &kp O      &kp P         &kp GRAVE
+    &kp ESC   &kp Q      &kp W      &kp E       &kp R       &kp T       &kp Y  &kp U       &kp I       &kp O      &kp P         &kp GRAVE
     &kp LCTRL &hm LGUI A &hm LALT S &hm LCTRL D &hm LSHFT F &kp G       &kp H  &kp J       &kp K       &kp L      &kp SEMI      &kp SQT
     &kp LSHFT &kp Z      &kp X      &kp C       &kp V       &kp B       &kp N  &kp M       &kp COMMA   &kp DOT    &kp FSLH      &kp RSHFT
-                                     &hm LGUI ESC &lt LOWER TAB &kp BSPC   &kp RET &lt RAISE SPACE &kp RGUI
+                                     &kp LGUI    &lt LOWER TAB &kp BSPC   &kp RET &lt RAISE SPACE &kp RGUI
             >;
         };
 
         lower_layer {
 // -----------------------------------------------------------------------------------------
 // |  `   |  1  |  2  |  3  |  4  |  5  |   |  6  |  7   |  8   |  9   |  0  | DEL  |
-// |      |     | ALT | CTL | SFT |     |   | LFT | DWN  |  UP  | RGT  |     |      |
-// |      |     |     |     |     |     |   | HOM | PGDN | PGUP | END  |     |      |
+// |      | GUI | ALT | CTL | SFT |     |   | LFT | DWN  |  UP  | RGT  |     |      |
+// |      |BACK | FWD | T-L | T-R |     |   | HOM | PGDN | PGUP | END  |     |      |
 //                     |     |     |     |   |     |      |      |
             bindings = <
-    &kp GRAVE &kp N1   &kp N2   &kp N3    &kp N4    &kp N5      &kp N6   &kp N7    &kp N8    &kp N9    &kp N0 &kp DEL
-    &trans    &trans   &kp LALT &kp LCTRL &kp LSHFT &none       &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &none  &none
-    &trans    &none    &none    &none     &none     &none       &kp HOME &kp PG_DN &kp PG_UP &kp END   &none  &none
+    &kp GRAVE &kp N1       &kp N2       &kp N3          &kp N4          &kp N5      &kp N6   &kp N7    &kp N8    &kp N9    &kp N0 &kp DEL
+    &trans    &kp LGUI     &kp LALT     &kp LCTRL       &kp LSHFT       &none       &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &none  &none
+    &trans    &kp LG(LBKT) &kp LG(RBKT) &kp LG(LS(LBKT)) &kp LG(LS(RBKT)) &none       &kp HOME &kp PG_DN &kp PG_UP &kp END   &none  &none
                                 &trans    &trans    &trans      &trans   &trans    &trans
             >;
         };
@@ -97,13 +97,13 @@
         adjust_layer {
 // -----------------------------------------------------------------------------------------
 // |  F1  | F2  | F3  | F4  | F5  | F6  |   | F7  |  F8  |  F9  | F10 | F11 | F12  |
-// | BT0  | BT1 | BT2 | BT3 | BT4 |BTCLR|   |     | VOL- | VOL+ | MUTE|     |      |
-// |      |     |     |     |     |     |   |     | PREV | PLAY | NEXT|     |      |
+// | BT0  | BT1 | BT2 | BT3 | BT4 |BTCLR|   | TOG | HUI  | SAI  | BRI | EFF |      |
+// |      |     |     |     |     |     |   |     | HUD  | SAD  | BRD |     |      |
 //                     |     |     |     |   |     |      |      |
             bindings = <
-    &kp F1       &kp F2       &kp F3       &kp F4       &kp F5       &kp F6       &kp F7 &kp F8       &kp F9       &kp F10    &kp F11 &kp F12
-    &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &bt BT_CLR   &none  &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &none   &none
-    &none        &none        &none        &none        &none        &none        &none  &kp C_PREV   &kp C_PP     &kp C_NEXT &none   &none
+    &kp F1       &kp F2       &kp F3       &kp F4       &kp F5       &kp F6       &kp F7 &kp F8          &kp F9          &kp F10         &kp F11         &kp F12
+    &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &bt BT_CLR   &rgb_ug RGB_TOG &rgb_ug RGB_HUI &rgb_ug RGB_SAI &rgb_ug RGB_BRI &rgb_ug RGB_EFF &none
+    &none        &none        &none        &none        &none        &none        &none           &rgb_ug RGB_HUD &rgb_ug RGB_SAD &rgb_ug RGB_BRD &none           &none
                                            &trans       &trans       &trans       &trans &trans       &trans
             >;
         };
